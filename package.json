@@ -1,0 +1,39 @@
+{
+  "name": "instagram-electron-app",
+  "version": "1.0.0",
+  "description": "an instagram electron wrapper that disables distracting features",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.instalectron",
+    "extraMetadata": {
+      "version": "1.0.0"
+    },
+    "productName": "Instalectron",
+    "files": [
+      "main.js",
+      "splash.html",
+      "package.json",
+      "assets/**/*"
+    ],
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icons/icon.png"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^39.2.6",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "@ghostery/adblocker-electron": "^2.13.4",
+    "cross-fetch": "^4.1.0"
+  }
+}

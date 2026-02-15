@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Loading...</title>
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
+      background: linear-gradient(135deg,#232526 0%,#414345 100%);
+      overflow: hidden;
+    }
+    body {
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      height: 100vh; color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      user-select: none;
+    }
+    .spinner {
+      width: 64px;
+      height: 64px;
+      border: 8px solid rgba(255,255,255,0.15);
+      border-top: 8px solid #06d6a0;
+      border-right: 8px solid #118ab2;
+      border-bottom: 8px solid #ffb703;
+      border-left: 8px solid #ff006e;
+      border-radius: 50%;
+      animation: spin 1.1s cubic-bezier(.64, .09, .08, 1) infinite;
+      margin-bottom: 32px;
+      box-shadow: 0 0 32px 4px #0008 inset;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .loading-text {
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      margin-top: 8px;
+      background: linear-gradient(90deg, #06d6a0, #118ab2, #ffb703, #ff006e, #8338ec, #06d6a0);
+      background-size: 400% 100%;
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: gradientloop 3s linear infinite;
+    }
+
+    @keyframes gradientloop {
+      0% { background-position: 0% 50%;}
+      100% { background-position:100% 50%;}
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner"></div>
+  <div class="loading-text">Instagram is loading ...</div>
+</body>
+</html>
