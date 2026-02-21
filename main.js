@@ -11,8 +11,7 @@ const REELS_URL = 'https://www.instagram.com/reels/';
 const BLOCKED_URLS = [
   'https://www.instagram.com/', // main page: following feed mixed with reels
   'https://www.instagram.com/?variant=home', // also main page
-  'https://www.instagram.com/explore/', // explore page: part of the sidebar
-  REELS_URL // reels page: also part of the sidebar
+  REELS_URL // reels page: part of the sidebar
 ];
 
 function isInvalidUrl(url) {
@@ -91,9 +90,30 @@ function createWindow() {
     }
   });
 
-  mainWin.webContents.on('did-navigate-in-page', (event, url) => {
+  let exploreCssKey = null;
+  mainWin.webContents.on('did-navigate-in-page', async (event, url) => {
     if (isInvalidUrl(url)) {
       mainWin.loadURL(START_URL);
+    }
+
+    if (url.includes("explore") && !exploreCssKey) {
+      // inject css and store key
+      exploreCssKey = await mainWin.webContents.insertCSS(`
+        [href*="reels"], nav {
+          display: none !important;
+        }
+        main > div > :nth-child(2),
+        main > div > :nth-child(3) {
+          display: none;
+        }
+      `);
+    } else if (exploreCssKey) {
+      // remove custom css otherwise no content in direct messages and notification
+      // timeout to prevent flashing of explore content when changing back
+      setTimeout(async () => {
+        await mainWin.webContents.removeInsertedCSS(exploreCssKey);
+        exploreCssKey = null;
+      }, 1000);
     }
   });
 
@@ -108,12 +128,12 @@ function createWindow() {
   mainWin.webContents.on('did-finish-load', () => {
     // disable Reels and Explore pages from sidebar, also remove "footer" which is inside a nav element
     mainWin.webContents.insertCSS(`
-      [href*="reels"], [href*="explore"], nav {
+       [href*="reels"], nav {
         display: none !important;
       }
     `);
 
-    // remove the navigation at the top of the page that lets oyu navigate between "home" and "following"
+    // remove the navigation at the top of the page that lets you navigate between "home" and "following"
     mainWin.webContents.executeJavaScript(`
       const tabs = document.querySelectorAll('[role=tab]');
       if (tabs.length > 1) {

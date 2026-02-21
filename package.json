@@ -1,6 +1,6 @@
 {
   "name": "instagram-electron-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "an instagram electron wrapper that disables distracting features",
   "main": "main.js",
   "type": "module",
@@ -11,7 +11,7 @@
   "build": {
     "appId": "com.instalectron",
     "extraMetadata": {
-      "version": "1.0.0"
+      "version": "1.0.1"
     },
     "productName": "Instalectron",
     "files": [
